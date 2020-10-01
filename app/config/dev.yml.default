@@ -1,0 +1,10 @@
+secret_key: "JeFvgCrMuvkoAJjkHgyaMDxku"
+
+redis_cache:
+  addrs:
+    server1: ":6379"
+
+pg_main:
+  addr: ":5432"
+  user: "postgres"
+  database: "real_world_dev"

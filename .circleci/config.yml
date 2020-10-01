@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.15
+
+      - image: circleci/postgres:12
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: real_world_dev
+          POSTGRES_HOST_AUTH_METHOD: trust
+
+      - image: redis
+
+    steps:
+      - checkout
+
+      - run: echo 0.0.0.0 dbhost | sudo tee -a /etc/hosts
+
+      - run:
+          name: wait for Postgres
+          command: dockerize -wait tcp://dbhost:5432 -timeout 2m
+
+      - run:
+          name: wait for Redis
+          command: dockerize -wait tcp://dbhost:6379 -timeout 2m
+
+      - run:
+          name: pre tests
+          command: |
+            sudo apt-get install npm
+            npm install npx
+            echo 0.0.0.0 dbhost | sudo tee -a /etc/hosts
+            sudo apt-get install -y postgresql-client
+            sudo apt-get install -y redis-server
+            cp app/config/dev.yml.default app/config/dev.yml
+            make db_migrate
+
+      - run:
+          name: tests
+          command: |
+            make api_test
+            make test
