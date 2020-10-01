@@ -7,7 +7,7 @@
 
 ## Introduction
 
-This project was created to demonstrate how to use
+This project was created to demonstrate how to use:
 
 - [treemux HTTP router](https://github.com/vmihailenco/treemux).
 - [go-pg PostgreSQL client and ORM](https://github.com/go-pg/pg).
