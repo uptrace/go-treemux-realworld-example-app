@@ -7,7 +7,9 @@
 
 ## Introduction
 
-This project was created to demonstrate how to use:
+This project implements JSON API as specified in
+[RealWorld](https://github.com/gothinkster/realworld) spec. It was created to demonstrate how to
+use:
 
 - [treemux HTTP router](https://github.com/vmihailenco/treemux).
 - [go-pg PostgreSQL client and ORM](https://github.com/go-pg/pg).
@@ -16,7 +18,8 @@ This project was created to demonstrate how to use:
 - [go-pg/migrations](https://github.com/go-pg/migrations).
 - [Tracing using uptrace-go](https://github.com/uptrace/uptrace-go).
 
-It implements JSON API as specified in [RealWorld](https://github.com/gothinkster/realworld) spec.
+Your can find more details in
+[Writing REST API with Go and PostgreSQL](https://pg.uptrace.dev/rest-api/) tutorial.
 
 ## Project structure
 
