@@ -3,12 +3,12 @@ package rwe
 import (
 	"context"
 	"sync"
+	"time"
 
 	"github.com/go-redis/cache/v8"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redis/redis_rate/v9"
 	"github.com/go-redis/redisext"
-	"github.com/vmihailenco/go-tinylfu"
 )
 
 var (
@@ -55,7 +55,7 @@ func RedisCache() *cache.Cache {
 	redisCacheOnce.Do(func() {
 		redisCache = cache.New(&cache.Options{
 			Redis:      RedisRing(),
-			LocalCache: tinylfu.NewSync(10000, 100000),
+			LocalCache: cache.NewTinyLFU(1000, time.Minute),
 		})
 	})
 	return redisCache

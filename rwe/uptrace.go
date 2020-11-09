@@ -6,12 +6,14 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/uptrace/uptrace-go/uptrace"
-	"go.opentelemetry.io/otel/api/trace"
+	"go.opentelemetry.io/otel/api/global"
+	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/sdk/resource"
 )
 
 var (
 	upclient *uptrace.Client
-	Tracer   trace.Tracer
+	Tracer   = global.Tracer("github.com/uptrace/go-treemux-realworld-example-app")
 )
 
 func setupOtel(ctx context.Context) {
@@ -25,13 +27,11 @@ func setupUptrace(ctx context.Context) error {
 	upclient = uptrace.NewClient(&uptrace.Config{
 		DSN: Config.Uptrace.DSN,
 
-		Resource: map[string]interface{}{
-			"service.name": Config.Service,
-			"hostname":     hostname,
-		},
+		Resource: resource.New(
+			label.String("service.name", Config.Service),
+			label.String("host.name", hostname),
+		),
 	})
-
-	Tracer = upclient.Tracer("rwe")
 
 	OnExitSecondary(func(ctx context.Context) {
 		if err := upclient.Close(); err != nil {
