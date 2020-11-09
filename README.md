@@ -5,6 +5,8 @@
 
 > :heart: [**Uptrace.dev** - distributed traces, logs, and errors in one place](https://uptrace.dev)
 
+- [Same app but with Gin instead of treemux](https://github.com/uptrace/go-realworld-example-app)
+
 ## Introduction
 
 This project implements JSON API as specified in
