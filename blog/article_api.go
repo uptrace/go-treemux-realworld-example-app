@@ -43,7 +43,7 @@ func listArticlesEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"articles":      articles,
 		"articlesCount": len(articles),
 	})
@@ -62,7 +62,7 @@ func showArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"article": article,
 	})
 }
@@ -85,7 +85,7 @@ func articleFeedEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"articles":      articles,
 		"articlesCount": len(articles),
 	})
@@ -125,7 +125,7 @@ func createArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	article.Author = org.NewProfile(user)
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"article": article,
 	})
 }
@@ -175,7 +175,7 @@ func updateArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	article.Author = org.NewProfile(user)
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"article": article,
 	})
 }
@@ -247,7 +247,7 @@ func favoriteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		article.FavoritesCount = article.FavoritesCount + 1
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"article": article,
 	})
 }
@@ -280,7 +280,7 @@ func unfavoriteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error
 		article.FavoritesCount = article.FavoritesCount - 1
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"article": article,
 	})
 }
@@ -297,7 +297,7 @@ func listTagsEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"tags": tags,
 	})
 }

@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/go-redis/redis_rate/v9"
-	"github.com/uptrace/go-realworld-example-app/httputil"
+	"github.com/uptrace/go-realworld-example-app/httputil/httperror"
 	"github.com/vmihailenco/treemux"
 )
 
@@ -17,7 +17,10 @@ var (
 )
 
 func init() {
-	Router.ErrorHandler = httputil.ErrorHandler
+	Router.ErrorHandler = func(w http.ResponseWriter, req treemux.Request, err error) {
+		httpErr := httperror.From(err)
+		_ = treemux.JSON(w, httpErr.H())
+	}
 
 	api.Use(corsMiddleware)
 	api.Use(rateLimitMiddleware)

@@ -28,7 +28,7 @@ func setUserToken(user *User) error {
 
 func currentUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	user := UserFromContext(req.Context())
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"user": user,
 	})
 }
@@ -67,7 +67,7 @@ func createUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	user.Password = ""
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"user": user,
 	})
 }
@@ -113,7 +113,7 @@ func loginUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"user": user,
 	})
 }
@@ -164,7 +164,7 @@ func updateUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	user.Password = ""
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"user": authUser,
 	})
 }
@@ -196,7 +196,7 @@ func profileEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"profile": NewProfile(user),
 	})
 }
@@ -221,7 +221,7 @@ func followUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	user.Following = true
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"profile": NewProfile(user),
 	})
 }
@@ -244,7 +244,7 @@ func unfollowUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	user.Following = false
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"profile": NewProfile(user),
 	})
 }

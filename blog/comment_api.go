@@ -33,7 +33,7 @@ func listCommentsEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"comments": comments,
 	})
 }
@@ -67,7 +67,7 @@ func showCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
 		return err
 	}
 
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"comment": comment,
 	})
 }
@@ -107,7 +107,7 @@ func createCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	}
 
 	comment.Author = org.NewProfile(user)
-	return httputil.Write(w, httputil.M{
+	return treemux.JSON(w, treemux.H{
 		"comment": comment,
 	})
 }

@@ -20,7 +20,7 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/uptrace/uptrace-go v0.2.0
 	github.com/vmihailenco/go-tinylfu v0.0.0-20200714092347-120b932f0a08
-	github.com/vmihailenco/treemux v0.1.0
+	github.com/vmihailenco/treemux v0.1.1
 	go.opentelemetry.io/otel v0.12.0
 	golang.org/x/crypto v0.0.0-20200930160638-afb6bcd081ae
 	golang.org/x/exp v0.0.0-20200924195034-c827fd4f18b9
