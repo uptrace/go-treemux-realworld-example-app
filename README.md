@@ -18,7 +18,7 @@ use:
 - [go-pg/migrations](https://github.com/go-pg/migrations).
 - [Tracing using uptrace-go](https://github.com/uptrace/uptrace-go).
 
-Your can find more details in
+Your can find some details about design principles in the
 [Writing REST API with Go and PostgreSQL](https://pg.uptrace.dev/rest-api/) tutorial.
 
 ## Project structure
