@@ -7,15 +7,15 @@ import (
 func init() {
 	g := rwe.API.WithMiddleware(UserMiddleware)
 
-	g.POST("/users", createUserEndpoint)
-	g.POST("/users/login", loginUserEndpoint)
-	g.GET("/profiles/:username", profileEndpoint)
+	g.POST("/users", createUserHandler)
+	g.POST("/users/login", loginUserHandler)
+	g.GET("/profiles/:username", profileHandler)
 
 	g = g.WithMiddleware(MustUserMiddleware)
 
-	g.GET("/user/", currentUserEndpoint)
-	g.PUT("/user/", updateUserEndpoint)
+	g.GET("/user/", currentUserHandler)
+	g.PUT("/user/", updateUserHandler)
 
-	g.POST("/profiles/:username/follow", followUserEndpoint)
-	g.DELETE("/profiles/:username/follow", unfollowUserEndpoint)
+	g.POST("/profiles/:username/follow", followUserHandler)
+	g.DELETE("/profiles/:username/follow", unfollowUserHandler)
 }

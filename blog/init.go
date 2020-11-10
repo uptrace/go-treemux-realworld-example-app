@@ -8,22 +8,22 @@ import (
 func init() {
 	g := rwe.API.WithMiddleware(org.UserMiddleware)
 
-	g.GET("/tags/", listTagsEndpoint)
-	g.GET("/articles", listArticlesEndpoint)
-	g.GET("/articles/feed", articleFeedEndpoint)
-	g.GET("/articles/:slug", showArticleEndpoint)
-	g.GET("/articles/:slug/comments", listCommentsEndpoint)
-	g.GET("/articles/:slug/comments/:id", showCommentEndpoint)
+	g.GET("/tags/", listTagsHandler)
+	g.GET("/articles", listArticlesHandler)
+	g.GET("/articles/feed", articleFeedHandler)
+	g.GET("/articles/:slug", showArticleHandler)
+	g.GET("/articles/:slug/comments", listCommentsHandler)
+	g.GET("/articles/:slug/comments/:id", showCommentHandler)
 
 	g = g.WithMiddleware(org.MustUserMiddleware)
 
-	g.POST("/articles", createArticleEndpoint)
-	g.PUT("/articles/:slug", updateArticleEndpoint)
-	g.DELETE("/articles/:slug", deleteArticleEndpoint)
+	g.POST("/articles", createArticleHandler)
+	g.PUT("/articles/:slug", updateArticleHandler)
+	g.DELETE("/articles/:slug", deleteArticleHandler)
 
-	g.POST("/articles/:slug/favorite", favoriteArticleEndpoint)
-	g.DELETE("/articles/:slug/favorite", unfavoriteArticleEndpoint)
+	g.POST("/articles/:slug/favorite", favoriteArticleHandler)
+	g.DELETE("/articles/:slug/favorite", unfavoriteArticleHandler)
 
-	g.POST("/articles/:slug/comments", createCommentEndpoint)
-	g.DELETE("/articles/:slug/comments/:id", deleteCommentEndpoint)
+	g.POST("/articles/:slug/comments", createCommentHandler)
+	g.DELETE("/articles/:slug/comments/:id", deleteCommentHandler)
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/vmihailenco/treemux"
 )
 
-func listCommentsEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func listCommentsHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	article, err := SelectArticle(ctx, req.Param("slug"))
@@ -38,7 +38,7 @@ func listCommentsEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func showCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func showCommentHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	article, err := SelectArticle(ctx, req.Param("slug"))
@@ -72,7 +72,7 @@ func showCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func createCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func createCommentHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 
@@ -112,7 +112,7 @@ func createCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func deleteCommentEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func deleteCommentHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 

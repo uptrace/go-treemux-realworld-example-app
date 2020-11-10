@@ -26,14 +26,14 @@ func setUserToken(user *User) error {
 	return nil
 }
 
-func currentUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func currentUserHandler(w http.ResponseWriter, req treemux.Request) error {
 	user := UserFromContext(req.Context())
 	return treemux.JSON(w, treemux.H{
 		"user": user,
 	})
 }
 
-func createUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func createUserHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	var in struct {
@@ -80,7 +80,7 @@ func hashPassword(pass string) (string, error) {
 	return string(bytes), nil
 }
 
-func loginUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func loginUserHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	var in struct {
@@ -126,7 +126,7 @@ func comparePasswords(hash, pass string) error {
 	return nil
 }
 
-func updateUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func updateUserHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	authUser := UserFromContext(ctx)
 
@@ -169,7 +169,7 @@ func updateUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func profileEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func profileHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	followingColumn := func(q *orm.Query) (*orm.Query, error) {
@@ -201,7 +201,7 @@ func profileEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func followUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func followUserHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	authUser := UserFromContext(ctx)
 
@@ -226,7 +226,7 @@ func followUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func unfollowUserEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func unfollowUserHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	authUser := UserFromContext(ctx)
 

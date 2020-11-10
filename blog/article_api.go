@@ -25,7 +25,7 @@ func makeSlug(title string) string {
 	return slug.Make(title) + "-" + strconv.Itoa(rand.Int())
 }
 
-func listArticlesEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func listArticlesHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	f, err := decodeArticleFilter(req)
@@ -49,7 +49,7 @@ func listArticlesEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func showArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func showArticleHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	f, err := decodeArticleFilter(req)
@@ -67,7 +67,7 @@ func showArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func articleFeedEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func articleFeedHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	f, err := decodeArticleFilter(req)
@@ -91,7 +91,7 @@ func articleFeedEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func createArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func createArticleHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 
@@ -130,7 +130,7 @@ func createArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func updateArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func updateArticleHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 
@@ -180,7 +180,7 @@ func updateArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func deleteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func deleteArticleHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 
@@ -217,7 +217,7 @@ func createTags(ctx context.Context, article *Article) error {
 	return nil
 }
 
-func favoriteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func favoriteArticleHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 
@@ -252,7 +252,7 @@ func favoriteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
 	})
 }
 
-func unfavoriteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func unfavoriteArticleHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 	user := org.UserFromContext(ctx)
 
@@ -285,7 +285,7 @@ func unfavoriteArticleEndpoint(w http.ResponseWriter, req treemux.Request) error
 	})
 }
 
-func listTagsEndpoint(w http.ResponseWriter, req treemux.Request) error {
+func listTagsHandler(w http.ResponseWriter, req treemux.Request) error {
 	ctx := req.Context()
 
 	tags := make([]string, 0)
