@@ -20,9 +20,9 @@ var (
 
 func init() {
 	Router = treemux.New(
-		treemux.WithMiddleware(treemuxgzip.Middleware),
-		treemux.WithMiddleware(treemuxotel.Middleware),
-		treemux.WithMiddleware(reqlog.Middleware),
+		treemux.WithMiddleware(treemuxgzip.NewMiddleware()),
+		treemux.WithMiddleware(treemuxotel.NewMiddleware()),
+		treemux.WithMiddleware(reqlog.NewMiddleware()),
 		treemux.WithErrorHandler(errorHandler),
 	)
 
