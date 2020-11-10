@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/go-pg/pg/v10"
-	"github.com/vmihailenco/treemux"
 )
 
 var (
@@ -63,12 +62,4 @@ func New(status int, code, msg string, args ...interface{}) Error {
 
 func (e Error) Error() string {
 	return e.Message
-}
-
-func (e Error) H() treemux.H {
-	return treemux.H{
-		"status":  e.Status,
-		"code":    e.Code,
-		"message": e.Message,
-	}
 }

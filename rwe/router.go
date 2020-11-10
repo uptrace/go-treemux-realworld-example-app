@@ -8,18 +8,23 @@ import (
 	"github.com/go-redis/redis_rate/v9"
 	"github.com/uptrace/go-realworld-example-app/httputil/httperror"
 	"github.com/vmihailenco/treemux"
+	"github.com/vmihailenco/treemux/extra/reqlog"
 )
 
 var (
 	Router = treemux.New()
-	api    = Router.NewGroup("/api")
-	API    = api.Lock() // lock shared group so it can't be modified
+	API    *treemux.LockedGroup
 )
 
 func init() {
+	Router.Use(reqlog.Middleware)
+
+	api := Router.NewGroup("/api")
+	API = api.Lock()
+
 	Router.ErrorHandler = func(w http.ResponseWriter, req treemux.Request, err error) {
 		httpErr := httperror.From(err)
-		_ = treemux.JSON(w, httpErr.H())
+		_ = treemux.JSON(w, httpErr)
 	}
 
 	api.Use(corsMiddleware)

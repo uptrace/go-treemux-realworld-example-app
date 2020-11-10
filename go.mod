@@ -22,13 +22,13 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/uptrace/uptrace-go v0.4.2
 	github.com/vmihailenco/msgpack/v5 v5.0.0-rc.2 // indirect
-	github.com/vmihailenco/treemux v0.1.2
+	github.com/vmihailenco/treemux v0.1.3
+	github.com/vmihailenco/treemux/extra/reqlog v0.1.3
 	go.opentelemetry.io/otel v0.13.0
 	go.opentelemetry.io/otel/sdk v0.13.0
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
 	golang.org/x/exp v0.0.0-20201008143054-e3b2a7f2fdc7
-	golang.org/x/net v0.0.0-20201031054903-ff519b6c9102 // indirect
-	golang.org/x/sys v0.0.0-20201107080550-4d91cf3a1aaf // indirect
+	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
 	golang.org/x/text v0.3.4 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/yaml.v2 v2.3.0
