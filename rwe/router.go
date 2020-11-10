@@ -9,51 +9,54 @@ import (
 	"github.com/uptrace/go-realworld-example-app/httputil/httperror"
 	"github.com/vmihailenco/treemux"
 	"github.com/vmihailenco/treemux/extra/reqlog"
+	"github.com/vmihailenco/treemux/extra/treemuxgzip"
+	"github.com/vmihailenco/treemux/extra/treemuxotel"
 )
 
 var (
-	Router = treemux.New()
-	API    *treemux.LockedGroup
+	Router *treemux.TreeMux
+	API    *treemux.Group
 )
 
 func init() {
-	Router.Use(reqlog.Middleware)
+	Router = treemux.New(
+		treemux.WithMiddleware(treemuxgzip.Middleware),
+		treemux.WithMiddleware(treemuxotel.Middleware),
+		treemux.WithMiddleware(reqlog.Middleware),
+		treemux.WithErrorHandler(errorHandler),
+	)
 
-	api := Router.NewGroup("/api")
-	API = api.Lock()
-
-	Router.ErrorHandler = func(w http.ResponseWriter, req treemux.Request, err error) {
-		httpErr := httperror.From(err)
-		_ = treemux.JSON(w, httpErr)
-	}
-
-	api.Use(corsMiddleware)
-	api.Use(rateLimitMiddleware)
-	// Router.Use(gintrace.Middleware("rwe"))
-
-	api.OPTIONS("/*", corsPreflight)
-
-	API = api.Lock()
+	API = Router.NewGroup("/api",
+		treemux.WithMiddleware(corsMiddleware),
+		treemux.WithMiddleware(rateLimitMiddleware),
+	)
 }
 
-func corsPreflight(w http.ResponseWriter, req treemux.Request) error {
-	h := w.Header()
-	if origin := req.Header.Get("Origin"); origin != "" {
-		h.Set("Access-Control-Allow-Origin", origin)
-		h.Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,HEAD")
-		h.Set("Access-Control-Allow-Headers", "authorization,content-type")
-		h.Set("Access-Control-Max-Age", "86400")
-	}
-	w.WriteHeader(http.StatusNoContent)
-	return nil
+func errorHandler(w http.ResponseWriter, req treemux.Request, err error) {
+	httpErr := httperror.From(err)
+	_ = treemux.JSON(w, httpErr)
 }
 
 func corsMiddleware(next treemux.HandlerFunc) treemux.HandlerFunc {
 	return func(w http.ResponseWriter, req treemux.Request) error {
-		if origin := req.Header.Get("Origin"); origin != "" {
-			h := w.Header()
-			h.Set("Access-Control-Allow-Origin", origin)
+		origin := req.Header.Get("Origin")
+		if origin == "" {
+			return next(w, req)
 		}
+
+		h := w.Header()
+
+		h.Set("Access-Control-Allow-Origin", origin)
+		h.Set("Access-Control-Allow-Credentials", "true")
+
+		// CORS preflight.
+		if req.Method == http.MethodOptions {
+			h.Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,HEAD")
+			h.Set("Access-Control-Allow-Headers", "authorization,content-type")
+			h.Set("Access-Control-Max-Age", "86400")
+			return nil
+		}
+
 		return next(w, req)
 	}
 }

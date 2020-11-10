@@ -15,15 +15,16 @@ require (
 	github.com/go-redis/redisext v0.3.1
 	github.com/google/uuid v1.1.2 // indirect
 	github.com/gosimple/slug v1.9.0
-	github.com/klauspost/compress v1.11.2 // indirect
 	github.com/onsi/ginkgo v1.14.2
 	github.com/onsi/gomega v1.10.3
 	github.com/segmentio/encoding v0.2.2 // indirect
 	github.com/sirupsen/logrus v1.7.0
 	github.com/uptrace/uptrace-go v0.4.2
 	github.com/vmihailenco/msgpack/v5 v5.0.0-rc.2 // indirect
-	github.com/vmihailenco/treemux v0.1.3
-	github.com/vmihailenco/treemux/extra/reqlog v0.1.3
+	github.com/vmihailenco/treemux v0.2.0
+	github.com/vmihailenco/treemux/extra/reqlog v0.2.0
+	github.com/vmihailenco/treemux/extra/treemuxgzip v0.2.0
+	github.com/vmihailenco/treemux/extra/treemuxotel v0.2.0
 	go.opentelemetry.io/otel v0.13.0
 	go.opentelemetry.io/otel/sdk v0.13.0
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897

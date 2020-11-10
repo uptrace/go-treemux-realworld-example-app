@@ -6,9 +6,7 @@ import (
 )
 
 func init() {
-	g := rwe.API.NewGroup("")
-
-	g.Use(org.UserMiddleware)
+	g := rwe.API.WithMiddleware(org.UserMiddleware)
 
 	g.GET("/tags/", listTagsEndpoint)
 	g.GET("/articles", listArticlesEndpoint)
@@ -17,7 +15,7 @@ func init() {
 	g.GET("/articles/:slug/comments", listCommentsEndpoint)
 	g.GET("/articles/:slug/comments/:id", showCommentEndpoint)
 
-	g.Use(org.MustUserMiddleware)
+	g = g.WithMiddleware(org.MustUserMiddleware)
 
 	g.POST("/articles", createArticleEndpoint)
 	g.PUT("/articles/:slug", updateArticleEndpoint)
