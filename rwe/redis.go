@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/go-redis/cache/v8"
+	"github.com/go-redis/redis/extra/redisotel"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redis/redis_rate/v9"
-	"github.com/go-redis/redisext"
 )
 
 var (
@@ -23,7 +23,7 @@ func RedisRing() *redis.Ring {
 
 		_ = redisRing.ForEachShard(context.TODO(),
 			func(ctx context.Context, shard *redis.Client) error {
-				shard.AddHook(redisext.OpenTelemetryHook{})
+				shard.AddHook(redisotel.TracingHook{})
 				return nil
 			})
 	})

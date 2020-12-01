@@ -23,7 +23,7 @@ func init() {
 		treemux.WithMiddleware(treemuxgzip.NewMiddleware()),
 		treemux.WithMiddleware(treemuxotel.NewMiddleware()),
 		treemux.WithMiddleware(reqlog.NewMiddleware()),
-		treemux.WithErrorHandler(errorHandler),
+		treemux.WithMiddleware(errorHandler),
 	)
 
 	API = Router.NewGroup("/api",
@@ -32,9 +32,21 @@ func init() {
 	)
 }
 
-func errorHandler(w http.ResponseWriter, req treemux.Request, err error) {
-	httpErr := httperror.From(err)
-	_ = treemux.JSON(w, httpErr)
+func errorHandler(next treemux.HandlerFunc) treemux.HandlerFunc {
+	return func(w http.ResponseWriter, req treemux.Request) error {
+		err := next(w, req)
+		if err == nil {
+			return nil
+		}
+
+		httpErr := httperror.From(err)
+		if httpErr.Status != 0 {
+			w.WriteHeader(httpErr.Status)
+		}
+		_ = treemux.JSON(w, httpErr)
+
+		return err
+	}
 }
 
 func corsMiddleware(next treemux.HandlerFunc) treemux.HandlerFunc {

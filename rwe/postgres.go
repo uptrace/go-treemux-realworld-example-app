@@ -5,8 +5,9 @@ import (
 	"net"
 	"sync"
 
+	"github.com/go-pg/pg/extra/pgdebug"
+	"github.com/go-pg/pg/extra/pgotel"
 	"github.com/go-pg/pg/v10"
-	"github.com/go-pg/pgext"
 	"github.com/sirupsen/logrus"
 	"github.com/uptrace/go-realworld-example-app/xconfig"
 )
@@ -60,9 +61,9 @@ func NewPostgres(cfg *xconfig.Postgres, usePool bool) *pg.DB {
 		}
 	})
 
-	db.AddQueryHook(pgext.OpenTelemetryHook{})
+	db.AddQueryHook(pgotel.TracingHook{})
 	if IsDebug() {
-		db.AddQueryHook(pgext.DebugHook{})
+		db.AddQueryHook(pgdebug.DebugHook{})
 	}
 
 	return db
